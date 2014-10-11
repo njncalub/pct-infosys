@@ -1,3 +1,7 @@
 from django.contrib import admin
+from room_manager.models import Room
 
-# Register your models here.
+class RoomAdmin(admin.ModelAdmin):
+    model = Room
+
+admin.site.register(Room, RoomAdmin)

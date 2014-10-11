@@ -9,7 +9,11 @@ class SchoolYear(models.Model):
     created_at = models.DateTimeField(_('created at'), auto_now_add=True)
 
     class Meta:
-        verbose_name = _("School Year")
+        verbose_name = _("school year")
+
+    def get_short_name(self):
+        return "SY {start_year}-{end_year}".format(start_year=str(self.start_year)[-2],
+                                                   end_year=str(self.end_year)[-2])
 
     def __unicode__(self):
         if_is_active = _(" (active)").__unicode__()

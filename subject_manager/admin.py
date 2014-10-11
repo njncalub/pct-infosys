@@ -1,3 +1,12 @@
 from django.contrib import admin
+from subject_manager.models import Subject, SubjectInstance
 
-# Register your models here.
+class SubjectAdmin(admin.ModelAdmin):
+    model = Subject
+
+class SubjectInstanceAdmin(admin.ModelAdmin):
+    model = SubjectInstance
+
+
+admin.site.register(Subject, SubjectAdmin)
+admin.site.register(SubjectInstance, SubjectInstanceAdmin)

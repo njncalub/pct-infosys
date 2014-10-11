@@ -18,6 +18,8 @@ INSTALLED_APPS = (
     # LOCAL APPS
     'school_year_manager',
     'student_profiling',
+    'room_manager',
+    'subject_manager',
 )
 
 MIDDLEWARE_CLASSES = (
