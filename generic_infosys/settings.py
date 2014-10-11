@@ -9,6 +9,7 @@ TEMPLATE_DEBUG = True
 ALLOWED_HOSTS = []
 
 INSTALLED_APPS = (
+    # DEFAULT_APPS
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -17,9 +18,11 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     # LOCAL APPS
     'school_year_manager',
-    'student_profiling',
-    'room_manager',
     'subject_manager',
+    'room_manager',
+    'student_profiling',
+    'program_manager',
+    'section_manager',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -35,7 +38,6 @@ MIDDLEWARE_CLASSES = (
 AUTH_USER_MODEL = 'student_profiling.Student'
 
 ROOT_URLCONF = 'generic_infosys.urls'
-
 WSGI_APPLICATION = 'generic_infosys.wsgi.application'
 
 DATABASES = {

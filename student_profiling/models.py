@@ -10,6 +10,8 @@ from django.core.mail import send_mail
 from django.utils.translation import ugettext_lazy as _
 from django.utils.timezone import utc
 
+from program_manager.models import DegreeProgram
+
 
 SEX_CHOICES = (
     ('M', 'Male'),
@@ -51,6 +53,8 @@ class Student(AbstractBaseUser, PermissionsMixin):
     middle_name     = models.CharField(_('middle name'), max_length=200, **optional)
     sex             = models.CharField(_('sex'), max_length=1, choices=SEX_CHOICES, **optional)
     birth_date      = models.DateField(_('birth date'), **optional)
+
+    degree_program  = models.ForeignKey(DegreeProgram, **optional)
 
     address         = models.TextField(_('address'), max_length=200, **optional)
     mobile_number   = models.CharField(_('mobile number'), max_length=200, **optional)

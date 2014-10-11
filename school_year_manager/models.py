@@ -3,6 +3,7 @@ from django.core.exceptions import ValidationError
 from django.utils.translation import ugettext_lazy as _
 
 class SchoolYear(models.Model):
+
     start_year = models.IntegerField(_('start year'), max_length=4, blank=True, null=True, unique=True)
     end_year   = models.IntegerField(_('end year'), max_length=4, blank=True, null=True, unique=True)
     is_active  = models.BooleanField(_('is active'), default=False)

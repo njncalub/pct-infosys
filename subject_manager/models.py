@@ -6,6 +6,8 @@ from django.utils.timezone import utc
 
 from room_manager.models import Room
 from school_year_manager.models import SchoolYear
+from student_profiling.models import Student
+
 
 TIME_SLOT_CHOICES = (
     ('0800AM', '08:00AM-12:00PM'),
@@ -45,20 +47,23 @@ class Subject(models.Model):
     def __unicode__(self):
         return "{code} {name}".format(code=self.code, name=self.name)
 
+
 class SubjectInstance(models.Model):
 
-    subject     = models.ForeignKey(Subject)
-    school_year = models.ForeignKey(SchoolYear)
+    subject       = models.ForeignKey(Subject)
+    school_year   = models.ForeignKey(SchoolYear)
+    instance_code = models.CharField(_('instance code'), max_length=15, **optional)
 
-    description = models.TextField(_('description'), **optional)
-    time        = models.CharField(_('time'), max_length=6, choices=TIME_SLOT_CHOICES, default='0800AM')
-    days        = models.CharField(_('days'), max_length=3, choices=DAYS_CHOICES, default='M-F')
-    date_start  = models.DateField(_('start date'), **optional)
-    date_end    = models.DateField(_('end date'), **optional)
-    room        = models.ForeignKey(Room, **optional)
+    time          = models.CharField(_('time'), max_length=6, choices=TIME_SLOT_CHOICES, default='0800AM')
+    days          = models.CharField(_('days'), max_length=3, choices=DAYS_CHOICES, default='M-F')
+    date_start    = models.DateField(_('start date'), **optional)
+    date_end      = models.DateField(_('end date'), **optional)
+    room          = models.ForeignKey(Room, **optional)
 
-    created_at  = models.DateTimeField(_('created at'), editable=False)
-    modified_at = models.DateTimeField(_('modified at'), **optional)
+    students      = models.ManyToManyField(Student)
+
+    created_at    = models.DateTimeField(_('created at'), editable=False)
+    modified_at   = models.DateTimeField(_('modified at'), **optional)
 
     def save(self, *args, **kwargs):
         if not self.id:
@@ -68,4 +73,5 @@ class SubjectInstance(models.Model):
         return super(SubjectInstance, self).save(*args, **kwargs)
 
     def __unicode__(self):
-        return "{code} {name}".format(code=self.subject.code, name=self.name)
+        return "{code} {school_year}".format(code=self.subject.code,
+                                             school_year=self.school_year.get_short_name())
