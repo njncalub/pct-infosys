@@ -6,7 +6,7 @@ A simple information system project using Django.
 -----
 
 ##### Install dependencies:
-    python 2.7
+    python 2.7.x
     virtualenv
     pip
 
