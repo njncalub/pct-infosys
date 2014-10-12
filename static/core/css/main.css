@@ -21,3 +21,9 @@
     padding-bottom: 10px;
     max-height: 65px;
 }
+
+.sidebar-active {
+    color: #fff !important;
+    background: rgba(255,255,255,0.2) !important;
+    text-decoration: none !important;
+}
