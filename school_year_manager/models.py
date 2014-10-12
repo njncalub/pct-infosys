@@ -1,13 +1,39 @@
+import datetime
+
 from django.db import models
 from django.core.exceptions import ValidationError
 from django.utils.translation import ugettext_lazy as _
+from django.utils.timezone import utc
+
+from student_profiling.models import Student
+
+
+SEMESTER_CHOICES = (
+    ('1STSEM', '1st semester'),
+    ('2NDSEM', '2nd semester'),
+    ('SUMMER', 'Summer'),
+)
+
+SEMESTER_DICT = {
+    '1STSEM': '1st semester',
+    '2NDSEM': '2nd semester',
+    'SUMMER': 'Summer',
+}
+
+optional = {
+    'blank': True,
+    'null': True,
+}
+
 
 class SchoolYear(models.Model):
 
-    start_year = models.IntegerField(_('start year'), max_length=4, blank=True, null=True, unique=True)
-    end_year   = models.IntegerField(_('end year'), max_length=4, blank=True, null=True, unique=True)
-    is_active  = models.BooleanField(_('is active'), default=False)
-    created_at = models.DateTimeField(_('created at'), auto_now_add=True)
+    start_year  = models.IntegerField(_('start year'), max_length=4, blank=True, null=True, unique=True)
+    end_year    = models.IntegerField(_('end year'), max_length=4, blank=True, null=True, unique=True)
+    is_active   = models.BooleanField(_('is active'), default=False)
+
+    created_at  = models.DateTimeField(_('created at'), auto_now_add=True)
+    modified_at = models.DateTimeField(_('modified at'), **optional)
 
     class Meta:
         verbose_name = _("school year")
@@ -29,5 +55,34 @@ class SchoolYear(models.Model):
     def save(self, *args, **kwargs):
         if self.is_active:
             SchoolYear.objects.filter(is_active=True).update(is_active=False)
+        if not self.id:
+            self.created_at = datetime.datetime.today().replace(tzinfo=utc)
+        self.modified_at = datetime.datetime.today().replace(tzinfo=utc)
 
         super(SchoolYear, self).save(*args, **kwargs)
+
+
+class Semester(models.Model):
+
+    semester    = models.CharField(_('semester'), choices=SEMESTER_CHOICES, max_length=6)
+    school_year = models.ForeignKey(SchoolYear)
+
+    students    = models.ManyToManyField(Student, **optional)
+
+    created_at  = models.DateTimeField(_('created at'), editable=False)
+    modified_at = models.DateTimeField(_('modified at'), **optional)
+
+    def get_student_count(self):
+        return self.students.count()
+    get_student_count.short_description = 'students enrolled'
+
+    def save(self, *args, **kwargs):
+        if not self.id:
+            self.created_at = datetime.datetime.today().replace(tzinfo=utc)
+        self.modified_at = datetime.datetime.today().replace(tzinfo=utc)
+
+        return super(Semester, self).save(*args, **kwargs)
+
+    def __unicode__(self):
+        return "{semester} of {school_year}".format(semester=SEMESTER_DICT.get(self.semester),
+                                                    school_year=self.school_year)
