@@ -72,6 +72,10 @@ class Semester(models.Model):
     created_at  = models.DateTimeField(_('created at'), editable=False)
     modified_at = models.DateTimeField(_('modified at'), **optional)
 
+    def get_short_name(self):
+        return "{semester} of {school_year}".format(semester=SEMESTER_DICT.get(self.semester),
+                                                    school_year=self.school_year)
+
     def get_student_count(self):
         return self.students.count()
     get_student_count.short_description = 'students enrolled'

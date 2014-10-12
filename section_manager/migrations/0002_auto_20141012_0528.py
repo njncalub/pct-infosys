@@ -2,16 +2,24 @@
 from __future__ import unicode_literals
 
 from django.db import models, migrations
+from django.conf import settings
 
 
 class Migration(migrations.Migration):
 
     dependencies = [
+        ('section_manager', '0001_initial'),
+        migrations.swappable_dependency(settings.AUTH_USER_MODEL),
         ('program_manager', '0001_initial'),
-        ('section_manager', '0004_auto_20141012_0337'),
     ]
 
     operations = [
+        migrations.AddField(
+            model_name='sectioninstance',
+            name='students',
+            field=models.ManyToManyField(to=settings.AUTH_USER_MODEL, null=True, blank=True),
+            preserve_default=True,
+        ),
         migrations.AddField(
             model_name='section',
             name='degree_program',

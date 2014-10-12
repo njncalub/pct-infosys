@@ -5,7 +5,7 @@ from django.utils.translation import ugettext_lazy as _
 from django.utils.timezone import utc
 
 from room_manager.models import Room
-from school_year_manager.models import SchoolYear
+from school_year_manager.models import SchoolYear, Semester
 from student_profiling.models import Student
 
 
@@ -51,7 +51,7 @@ class Subject(models.Model):
 class SubjectInstance(models.Model):
 
     subject       = models.ForeignKey(Subject)
-    school_year   = models.ForeignKey(SchoolYear)
+    semester      = models.ForeignKey(Semester)
     instance_code = models.CharField(_('instance code'), max_length=15, **optional)
 
     time          = models.CharField(_('time'), max_length=6, choices=TIME_SLOT_CHOICES, default='0800AM')
@@ -77,5 +77,5 @@ class SubjectInstance(models.Model):
         return super(SubjectInstance, self).save(*args, **kwargs)
 
     def __unicode__(self):
-        return "{code} {school_year}".format(code=self.subject.code,
-                                             school_year=self.school_year.get_short_name())
+        return "{code} {semester}".format(code=self.subject.code,
+                                          semester=self.semester.get_short_name())

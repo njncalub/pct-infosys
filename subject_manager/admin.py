@@ -10,9 +10,9 @@ class SubjectAdmin(admin.ModelAdmin):
 
 class SubjectInstanceAdmin(admin.ModelAdmin):
     model             = SubjectInstance
-    list_display      = ('subject', 'school_year', 'instance_code', 'time', 'days', 'get_student_count')
+    list_display      = ('subject', 'semester', 'instance_code', 'time', 'days', 'get_student_count')
     filter_horizontal = ('students', )
-    list_filter       = ('school_year', 'time', 'days', 'date_start', 'date_end', 'room')
+    list_filter       = ('semester', 'time', 'days', 'date_start', 'date_end', 'room')
     search_fields     = ('instance_code', 'time', 'days', 'room')
 
 

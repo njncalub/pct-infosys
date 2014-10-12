@@ -9,7 +9,7 @@ class Migration(migrations.Migration):
 
     dependencies = [
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
-        ('school_year_manager', '0004_auto_20141012_0434'),
+        ('school_year_manager', '0001_initial'),
     ]
 
     operations = [
