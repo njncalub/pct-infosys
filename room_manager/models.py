@@ -13,6 +13,8 @@ optional = {
 class Room(models.Model):
 
     room_name   = models.CharField(_('room name'), max_length=30)
+    building    = models.CharField(_('building'), max_length=50, **optional)
+    floor       = models.IntegerField(_('floor'), max_length=1, **optional)
 
     created_at  = models.DateTimeField(_('created at'), editable=False)
     modified_at = models.DateTimeField(_('modified at'), **optional)

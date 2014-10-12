@@ -3,15 +3,18 @@ from section_manager.models import Section, SectionInstance
 
 
 class SectionAdmin(admin.ModelAdmin):
-    model = Section
+    model         = Section
+    list_display  = ('name', 'degree_program', 'year_level', )
+    list_filter   = ('year_level', 'degree_program__short_name', )
     search_fields = ('name', )
 
 
 class SectionInstanceAdmin(admin.ModelAdmin):
-    model = SectionInstance
+    model             = SectionInstance
+    list_display      = ('section', 'get_school_year', 'get_student_count', )
+    list_filter       = ('school_year__start_year', )
+    search_fields     = ('name', )
     filter_horizontal = ('students', )
-    list_filter   = ('school_year', )
-    search_fields = ('name', )
 
 
 admin.site.register(Section, SectionAdmin)

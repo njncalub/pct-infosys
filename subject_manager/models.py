@@ -60,10 +60,14 @@ class SubjectInstance(models.Model):
     date_end      = models.DateField(_('end date'), **optional)
     room          = models.ForeignKey(Room, **optional)
 
-    students      = models.ManyToManyField(Student)
+    students      = models.ManyToManyField(Student, **optional)
 
     created_at    = models.DateTimeField(_('created at'), editable=False)
     modified_at   = models.DateTimeField(_('modified at'), **optional)
+
+    def get_student_count(self):
+        return self.students.count()
+    get_student_count.short_description = 'students enrolled'
 
     def save(self, *args, **kwargs):
         if not self.id:
