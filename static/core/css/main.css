@@ -1,0 +1,23 @@
+.navbar {
+    border-radius: 0px;
+    min-height: 65px;
+    margin-bottom: initial;
+}
+
+.navbar-brand {
+    font-size: 25px;
+    height: 65px;
+    line-height: initial;
+}
+
+.navbar-default .navbar-brand {
+    color: #595959;
+}
+
+#brand-logo {
+    float: left;
+    padding-left: 15px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    max-height: 65px;
+}
