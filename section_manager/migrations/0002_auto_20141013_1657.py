@@ -20,6 +20,10 @@ class Migration(migrations.Migration):
             field=models.ManyToManyField(to=settings.AUTH_USER_MODEL, null=True, blank=True),
             preserve_default=True,
         ),
+        migrations.AlterUniqueTogether(
+            name='sectioninstance',
+            unique_together=set([('section', 'school_year')]),
+        ),
         migrations.AddField(
             model_name='section',
             name='degree_program',

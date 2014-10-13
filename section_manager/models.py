@@ -45,13 +45,24 @@ class Section(models.Model):
 
 class SectionInstance(models.Model):
 
-    section     = models.ForeignKey(Section)
     school_year = models.ForeignKey(SchoolYear)
+    section     = models.ForeignKey(Section)
 
     students    = models.ManyToManyField(Student, **optional)
 
     created_at  = models.DateTimeField(_('created at'), editable=False)
     modified_at = models.DateTimeField(_('modified at'), **optional)
+
+    class Meta:
+        unique_together = ('section', 'school_year',)
+
+    def get_year_level(self):
+        return self.section.year_level
+    get_year_level.short_description = 'year level'
+
+    def get_degree_program(self):
+        return self.section.degree_program.full_name
+    get_degree_program.short_description = 'degree program'
 
     def get_school_year(self):
         return self.school_year

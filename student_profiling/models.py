@@ -30,6 +30,8 @@ class StudentManager(BaseUserManager):
         if not username:
             raise ValueError('The username must be set')
         user = self.model(username=username)
+        user.first_name = username
+        user.last_name = username
         user.set_password(password)
         user.save(using=self._db)
         return user

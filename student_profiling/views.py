@@ -61,6 +61,9 @@ class RecordsView(View):
         self.context['subject_instances'] = subject_instances
         self.context['total_units'] = total_units
 
+        self.context['first_record'] = True
+        self.context['last_record'] = True
+
         return render(request, self.template_name, self.context)
 
 

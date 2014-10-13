@@ -63,6 +63,9 @@ class DegreeProgram(models.Model):
     created_at  = models.DateTimeField(_('created at'), editable=False)
     modified_at = models.DateTimeField(_('modified at'), **optional)
 
+    def get_degree_program(self):
+        return self.short_name
+
     def save(self, *args, **kwargs):
         if not self.id:
             self.created_at = datetime.datetime.today().replace(tzinfo=utc)
