@@ -38,6 +38,7 @@ class Teacher(models.Model):
                                        fn=self.first_name)
         else:
             return ""
+    get_full_name.short_description = 'full name'
 
     def get_short_name(self):
         if self.first_name and self.middle_name:
