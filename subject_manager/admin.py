@@ -13,7 +13,7 @@ class SubjectInstanceAdmin(admin.ModelAdmin):
     list_display      = ('subject', 'semester', 'instance_code', 'time', 'days', 'get_student_count')
     filter_horizontal = ('students', )
     list_filter       = ('semester', 'time', 'days', 'date_start', 'date_end', 'room')
-    search_fields     = ('instance_code', 'time', 'days', 'room')
+    search_fields     = ('subject__name', )
 
 
 admin.site.register(Subject, SubjectAdmin)

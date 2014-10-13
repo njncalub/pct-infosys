@@ -27,8 +27,12 @@
                         <a id="menu-toggle" href="#">Menu <span class="sidebar-icon"><i class="fa fa-bars"></i><span></a></li>
                 </ul>
                 <ul class="sidebar-nav" id="sidebar">
+                    <li><a {% if home_active %}class="sidebar-active" {% endif %}href="{% url 'index_page' %}">Home <span class="sidebar-icon"><i class="fa fa-home"></i><span></a></li>
+
                     <li><a {% if records_active %}class="sidebar-active" {% endif %}href="{% url 'records_view' %}">View student records <span class="sidebar-icon"><i class="fa fa-files-o"></i><span></a></li>
+
                     <li><a {% if search_active %}class="sidebar-active" {% endif %}href="{% url 'search_view' %}">Search subjects <span class="sidebar-icon"><i class="fa fa-search"></i><span></a></li>
+
                     <li><a href="{% url 'logout_view' %}">Logout <span class="sidebar-icon"><i class="fa fa-sign-out"></i><span></a></li>
                 </ul>
             </div>
@@ -43,11 +47,17 @@
                 </div>
 
                 <div id="content">
-                    {% block content %}{% endblock content %}
                     <div class="container-fluid">
-                        <h1>Simple Sidebar</h1>
-                        <p>This template has a responsive menu toggling system. The menu will appear collapsed on smaller screens, and will appear non-collapsed on larger screens. When toggled using the button below, the menu will appear/disappear. On small screens, the page content will be pushed off canvas.</p>
-                        <p>Make sure to keep all page content within the <code>#page-content-wrapper</code>.</p>
+                        <h1>{{ title }}</h1>
+                        <ol class="breadcrumb">
+                            <li><a href="{% url 'index_page' %}">Home</a></li>
+                            <li><a href="#">Library</a></li>
+                            <li class="active">Data</li>
+                        </ol>
+                        {% block content %}
+                        <p>Welcome, <strong>{{ user }}</strong>.</p>
+                        <p>You can view your student records and search for subjects using the menu at the right.</p>
+                        {% endblock content %}
                     </div>
                 </div>
 

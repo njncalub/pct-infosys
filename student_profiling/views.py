@@ -13,6 +13,7 @@ class IndexView(View):
     context          = {}
     title            = "Home"
     context['title'] = title
+    context['home_active'] = True
 
     def get(self, request, *args, **kwargs):
         if not request.user.is_authenticated():
