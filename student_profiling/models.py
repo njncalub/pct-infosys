@@ -7,8 +7,8 @@ from django.contrib.auth.models import BaseUserManager
 from django.contrib.auth.models import UserManager
 from django.core.exceptions import ValidationError
 from django.core.mail import send_mail
-from django.utils.translation import ugettext_lazy as _
 from django.utils.timezone import utc
+from django.utils.translation import ugettext_lazy as _
 
 from program_manager.models import DegreeProgram
 
@@ -103,4 +103,4 @@ class Student(AbstractBaseUser, PermissionsMixin):
         send_mail(subject, message, from_email, [self.email])
 
     def __unicode__(self):
-        return "{0}".format(self.username)
+        return self.get_full_name()

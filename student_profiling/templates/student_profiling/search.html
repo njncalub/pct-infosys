@@ -1,15 +1,13 @@
 {% extends "base_site.html" %}
 
 {% block content %}
-<form class="navbar-form navbar-left" role="search">
+<form class="form" role="search">
     <div class="form-group">
-        <input type="text" class="form-control" placeholder="Search">
+        <input type="text" class="form-control data-filter" placeholder="Filter subjects..." data-table="subjects-table" >
     </div>
-    <button type="submit" class="btn btn-default">Submit</button>
 </form>
-<br />
-<table class="table table-striped table-hover">
-    <tr>
+<table class="table table-bordered table-striped table-hover subjects-table">
+    <thead>
         <th>SUBJECT CODE</th>
         <th>SUBJECT DESCRIPTION</th>
         <th>UNITS</th>
@@ -18,18 +16,66 @@
         <th>DATE START</th>
         <th>DATE END</th>
         <th>ROOM</th>
-    </tr>
-    {% for s in subject_instances %}
-    <tr>
-        <td>{{ s.subject.code }}</td>
-        <td>{{ s.subject.name }}</td>
-        <td>{{ s.subject.units }}</td>
-        <td>{{ s.prettify_time }}</td>
-        <td>{{ s.prettify_days }}</td>
-        <td>{{ s.date_start }}</td>
-        <td>{{ s.date_end }}</td>
-        <td>{{ s.room }}</td>
-    </tr>
-    {% endfor %}
+        <th>TEACHER</th>
+    </thead>
+    <tbody>
+        {% for s in subject_instances %}
+        <tr>
+            <td class="text-center">{{ s.subject.code }}{% if s.instance_code %} ({{ s.instance_code }}){% endif %}</td>
+            <td>{{ s.subject.name }}</td>
+            <td class="text-center">{{ s.subject.units }}</td>
+            <td class="text-center">{{ s.prettify_time }}</td>
+            <td class="text-center">{{ s.prettify_days }}</td>
+            <td class="text-center">{{ s.date_start }}</td>
+            <td class="text-center">{{ s.date_end }}</td>
+            <td class="text-center">{% if s.room %}{{ s.room }}{% else %}TBA{% endif %}</td>
+            <td class="text-center">{% if s.teacher %}{{ s.teacher }}{% else %}N/A{% endif %}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
 </table>
 {% endblock content %}
+
+{% block extra_script_bottom %}
+<script type="text/javascript">
+(function(document) {
+    'use strict';
+
+    var LightTableFilter = (function(Arr) {
+
+        var _input;
+
+        function _onInputEvent(e) {
+            _input = e.target;
+            var tables = document.getElementsByClassName(_input.getAttribute('data-table'));
+            Arr.forEach.call(tables, function(table) {
+                Arr.forEach.call(table.tBodies, function(tbody) {
+                    Arr.forEach.call(tbody.rows, _filter);
+                });
+            });
+        }
+
+        function _filter(row) {
+            var text = row.textContent.toLowerCase(), val = _input.value.toLowerCase();
+            row.style.display = text.indexOf(val) === -1 ? 'none' : 'table-row';
+        }
+
+        return {
+            init: function() {
+                var inputs = document.getElementsByClassName('data-filter');
+                Arr.forEach.call(inputs, function(input) {
+                    input.oninput = _onInputEvent;
+                });
+            }
+        };
+    })(Array.prototype);
+
+    document.addEventListener('readystatechange', function() {
+        if (document.readyState === 'complete') {
+            LightTableFilter.init();
+        }
+    });
+
+})(document);
+</script>
+{% endblock extra_script_bottom %}

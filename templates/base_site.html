@@ -2,4 +2,16 @@
 
 {% block title %}{{ title }} | {{ site_title | default:_('PCT Information System') }}{% endblock title %}
 
+{% block breadcrumb %}
+    {% for page in breadcrumb_pages %}
+        <li{% if page.is_active %} class="active"{% endif %}>
+            {% if page.url and not page.is_active %}
+                <a href="{{ page.url }}">{{ page.title }}</a>
+            {% else %}
+                {{ page.title }}
+            {% endif %}
+        </li>
+    {% endfor %}
+{% endblock breadcrumb %}
+
 {% block footer %}Copyright &copy; 2014 &mdash; {{ site_title | default:_('PCT Information System') }}{% endblock footer %}

@@ -7,6 +7,7 @@ from django.utils.timezone import utc
 from room_manager.models import Room
 from school_year_manager.models import SchoolYear, Semester
 from student_profiling.models import Student
+from teacher_profiling.models import Teacher
 
 
 TIME_SLOT_CHOICES = (
@@ -64,7 +65,7 @@ class SubjectInstance(models.Model):
 
     subject       = models.ForeignKey(Subject)
     semester      = models.ForeignKey(Semester)
-    instance_code = models.CharField(_('instance code'), max_length=15, **optional)
+    instance_code = models.CharField(_('instance code'), max_length=25, **optional)
 
     time          = models.CharField(_('time'), max_length=6, choices=TIME_SLOT_CHOICES, default='0800AM')
     days          = models.CharField(_('days'), max_length=3, choices=DAYS_CHOICES, default='M-F')
@@ -73,6 +74,7 @@ class SubjectInstance(models.Model):
     room          = models.ForeignKey(Room, **optional)
 
     students      = models.ManyToManyField(Student, **optional)
+    teacher       = models.ForeignKey(Teacher, **optional)
 
     created_at    = models.DateTimeField(_('created at'), editable=False)
     modified_at   = models.DateTimeField(_('modified at'), **optional)

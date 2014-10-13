@@ -24,12 +24,12 @@
             <div id="sidebar-wrapper">
                 <ul id="sidebar_menu" class="sidebar-nav">
                     <li class="sidebar-brand">
-                        <a id="menu-toggle" href="#">Menu <span class="sidebar-icon"><i class="fa fa-bars"></i><span></a></li>
+                        <a id="menu-toggle" href="#">Dashboard <span class="sidebar-icon"><i class="fa fa-bars"></i><span></a></li>
                 </ul>
                 <ul class="sidebar-nav" id="sidebar">
                     <li><a {% if home_active %}class="sidebar-active" {% endif %}href="{% url 'index_page' %}">Home <span class="sidebar-icon"><i class="fa fa-home"></i><span></a></li>
 
-                    <li><a {% if records_active %}class="sidebar-active" {% endif %}href="{% url 'records_view' %}">View student records <span class="sidebar-icon"><i class="fa fa-files-o"></i><span></a></li>
+                    <li><a {% if records_active %}class="sidebar-active" {% endif %}href="{% url 'records_view' %}">View records <span class="sidebar-icon"><i class="fa fa-files-o"></i><span></a></li>
 
                     <li><a {% if search_active %}class="sidebar-active" {% endif %}href="{% url 'search_view' %}">Search subjects <span class="sidebar-icon"><i class="fa fa-search"></i><span></a></li>
 
@@ -50,9 +50,8 @@
                     <div class="container-fluid">
                         <h1>{{ title }}</h1>
                         <ol class="breadcrumb">
-                            <li><a href="{% url 'index_page' %}">Home</a></li>
-                            <li><a href="#">Library</a></li>
-                            <li class="active">Data</li>
+                            {% block breadcrumb %}
+                            {% endblock breadcrumb %}
                         </ol>
                         {% block content %}
                         <p>Welcome, <strong>{{ user }}</strong>.</p>
@@ -79,5 +78,7 @@
             $("#wrapper").toggleClass("active");
         });
         </script>
+
+        {% block extra_script_bottom %}{% endblock extra_script_bottom %}
     </body>
 </html>

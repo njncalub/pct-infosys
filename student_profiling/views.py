@@ -21,13 +21,18 @@ class IndexView(View):
         if not request.user.is_authenticated():
             return HttpResponseRedirect(reverse('login_view'))
 
+        breadcrumb_pages = [
+            {'title': 'Home', 'url': reverse('index_page'), 'is_active': False},
+        ]
+        self.context['breadcrumb_pages'] = breadcrumb_pages
+
         return render(request, self.template_name, self.context)
 
 
 class RecordsView(View):
     template_name    = "student_profiling/records.html"
     context          = {}
-    title            = "View Student Records"
+    title            = "View Records"
     context['title'] = title
     context['records_active'] = True
 
@@ -35,7 +40,12 @@ class RecordsView(View):
         if not request.user.is_authenticated():
             return HttpResponseRedirect(reverse('login_view'))
 
-        print request.user.username
+        breadcrumb_pages = [
+            {'title': 'Home', 'url': reverse('index_page'), 'is_active': False},
+            {'title': self.title, 'url': reverse('records_view'), 'is_active': True},
+        ]
+        self.context['breadcrumb_pages'] = breadcrumb_pages
+
         subject_instances = SubjectInstance.objects.filter(students__username=request.user.username)
         total_units = 0
         for s in subject_instances:
@@ -57,6 +67,12 @@ class SearchView(View):
     def get(self, request, *args, **kwargs):
         if not request.user.is_authenticated():
             return HttpResponseRedirect(reverse('login_view'))
+
+        breadcrumb_pages = [
+            {'title': 'Home', 'url': reverse('index_page'), 'is_active': False},
+            {'title': self.title, 'url': reverse('search_view'), 'is_active': True},
+        ]
+        self.context['breadcrumb_pages'] = breadcrumb_pages
 
         subject_instances = SubjectInstance.objects.all()
         self.context['subject_instances'] = subject_instances

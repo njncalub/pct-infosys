@@ -18,11 +18,12 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     # LOCAL APPS
     'school_year_manager',
-    'subject_manager',
     'room_manager',
-    'student_profiling',
+    'subject_manager',
     'program_manager',
     'section_manager',
+    'student_profiling',
+    'teacher_profiling',
 )
 
 MIDDLEWARE_CLASSES = (

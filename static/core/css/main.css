@@ -22,8 +22,47 @@
     max-height: 65px;
 }
 
+.breadcrumb {
+    margin-bottom: 10px;
+}
+
 .sidebar-active {
     color: #fff !important;
-    background: rgba(255,255,255,0.2) !important;
+    background: rgba(31, 85, 24, 0.88) !important;
     text-decoration: none !important;
+}
+
+.student-info-area {
+    margin-bottom: 20px;
+}
+.student-info {
+    padding: 0;
+}
+.info-label {
+    background-color: #d4d4d4;
+    color: #373737;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    font-weight: bold;
+}
+.info-text {
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+
+thead {
+    background-color: #d4d4d4;
+    color: #373737;
+}
+th {
+    text-align: center;
+    vertical-align: middle;
+}
+
+td {
+    vertical-align: middle;
+}
+
+.text-center {
+    text-align: center;
 }
