@@ -15,6 +15,7 @@ urlpatterns = patterns('',
     url(r'^logout/$', LogoutView.as_view(), name="logout_view"),
 
     url(r'^records/$', RecordsView.as_view(), name="records_view"),
+    url(r'^records/(?P<year>\d{4})/(?P<semester>\d{4})/$', RecordsView.as_view(), name="records_view"),
     url(r'^search/$', SearchView.as_view(), name="search_view"),
 
     url(r'^$', IndexView.as_view(), name="index_page"),

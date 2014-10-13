@@ -7,6 +7,8 @@ from django.template import RequestContext
 from django.views.generic import View
 
 from student_profiling.models import Student
+from subject_manager.models import Subject, SubjectInstance
+
 
 class IndexView(View):
     template_name    = "student_profiling/index.html"
@@ -23,7 +25,7 @@ class IndexView(View):
 
 
 class RecordsView(View):
-    template_name    = "student_profiling/index.html"
+    template_name    = "student_profiling/records.html"
     context          = {}
     title            = "View Student Records"
     context['title'] = title
@@ -33,11 +35,20 @@ class RecordsView(View):
         if not request.user.is_authenticated():
             return HttpResponseRedirect(reverse('login_view'))
 
+        print request.user.username
+        subject_instances = SubjectInstance.objects.filter(students__username=request.user.username)
+        total_units = 0
+        for s in subject_instances:
+            total_units += s.subject.units
+
+        self.context['subject_instances'] = subject_instances
+        self.context['total_units'] = total_units
+
         return render(request, self.template_name, self.context)
 
 
 class SearchView(View):
-    template_name    = "student_profiling/index.html"
+    template_name    = "student_profiling/search.html"
     context          = {}
     title            = "Search Subjects"
     context['title'] = title
@@ -46,6 +57,9 @@ class SearchView(View):
     def get(self, request, *args, **kwargs):
         if not request.user.is_authenticated():
             return HttpResponseRedirect(reverse('login_view'))
+
+        subject_instances = SubjectInstance.objects.all()
+        self.context['subject_instances'] = subject_instances
 
         return render(request, self.template_name, self.context)
 

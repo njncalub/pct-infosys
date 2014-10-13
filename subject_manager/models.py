@@ -21,6 +21,18 @@ DAYS_CHOICES = (
     ('SUN', 'Sundays'),
 )
 
+TIME_SLOT_DICT = {
+    '0800AM': '08:00AM-12:00PM',
+    '0100PM': '01:00PM-05:00PM',
+    '0530PM': '05:30PM-09:30PM',
+}
+
+DAYS_DICT = {
+    'M-F': 'Mondays-Fridays',
+    'SAT': 'Saturdays',
+    'SUN': 'Sundays',
+}
+
 optional = {
     'blank': True,
     'null': True,
@@ -64,6 +76,12 @@ class SubjectInstance(models.Model):
 
     created_at    = models.DateTimeField(_('created at'), editable=False)
     modified_at   = models.DateTimeField(_('modified at'), **optional)
+
+    def prettify_time(self):
+        return TIME_SLOT_DICT.get(self.time)
+
+    def prettify_days(self):
+        return DAYS_DICT.get(self.days)
 
     def get_student_count(self):
         return self.students.count()
