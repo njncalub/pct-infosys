@@ -28,8 +28,8 @@ optional = {
 
 class SchoolYear(models.Model):
 
-    start_year  = models.IntegerField(_('start year'), max_length=4, blank=True, null=True, unique=True)
-    end_year    = models.IntegerField(_('end year'), max_length=4, blank=True, null=True, unique=True)
+    start_year  = models.IntegerField(_('start year'), max_length=4, blank=True, null=True)
+    end_year    = models.IntegerField(_('end year'), max_length=4, blank=True, null=True)
     is_active   = models.BooleanField(_('is active'), default=False)
 
     created_at  = models.DateTimeField(_('created at'), auto_now_add=True)
@@ -37,6 +37,7 @@ class SchoolYear(models.Model):
 
     class Meta:
         verbose_name = _("school year")
+        unique_together = ('start_year', 'end_year',)
 
     def get_short_name(self):
         return "SY{start_year}-{end_year}".format(start_year=str(self.start_year)[-2:],
@@ -71,6 +72,9 @@ class Semester(models.Model):
 
     created_at  = models.DateTimeField(_('created at'), editable=False)
     modified_at = models.DateTimeField(_('modified at'), **optional)
+
+    class Meta:
+        unique_together = ('semester', 'school_year',)
 
     def get_short_name(self):
         return "{semester} of {school_year}".format(semester=SEMESTER_DICT.get(self.semester),

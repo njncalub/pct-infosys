@@ -17,6 +17,7 @@
         <th>DATE END</th>
         <th>ROOM</th>
         <th>TEACHER</th>
+        <th>ENROLLED</th>
     </thead>
     <tbody>
         {% for s in subject_instances %}
@@ -30,11 +31,12 @@
             <td class="text-center">{{ s.date_end }}</td>
             <td class="text-center">{% if s.room %}{{ s.room }}{% else %}TBA{% endif %}</td>
             <td class="text-center">{% if s.teacher %}{{ s.teacher }}{% else %}N/A{% endif %}</td>
+            <td class="text-center">{% if s.teacher %}{{ s.teacher }}{% else %}N/A{% endif %}</td>
         </tr>
         {% endfor %}
     </tbody>
 </table>
-Total subject(s): <span id="total-subjects">{{ subject_instances.count }}</span>
+Subjects offered for <span id="school-year">{{ school_year }}</span>. Subject(s) found: <span id="total-subjects">{{ subject_instances.count }}</span>.
 {% endblock content %}
 
 {% block extra_script_bottom %}

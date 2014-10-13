@@ -8,6 +8,7 @@ from django.views.generic import View
 
 from student_profiling.models import Student
 from subject_manager.models import Subject, SubjectInstance
+from school_year_manager.models import SchoolYear
 
 
 class IndexView(View):
@@ -20,6 +21,8 @@ class IndexView(View):
     def get(self, request, *args, **kwargs):
         if not request.user.is_authenticated():
             return HttpResponseRedirect(reverse('login_view'))
+        if request.user.is_admin:
+            return HttpResponseRedirect('/admin/')
 
         breadcrumb_pages = [
             {'title': 'Home', 'url': reverse('index_page'), 'is_active': False},
@@ -39,12 +42,16 @@ class RecordsView(View):
     def get(self, request, *args, **kwargs):
         if not request.user.is_authenticated():
             return HttpResponseRedirect(reverse('login_view'))
+        if request.user.is_admin:
+            return HttpResponseRedirect('/admin/')
 
         breadcrumb_pages = [
             {'title': 'Home', 'url': reverse('index_page'), 'is_active': False},
             {'title': self.title, 'url': reverse('records_view'), 'is_active': True},
         ]
         self.context['breadcrumb_pages'] = breadcrumb_pages
+
+        print kwargs
 
         subject_instances = SubjectInstance.objects.filter(students__username=request.user.username)
         total_units = 0
@@ -67,6 +74,8 @@ class SearchView(View):
     def get(self, request, *args, **kwargs):
         if not request.user.is_authenticated():
             return HttpResponseRedirect(reverse('login_view'))
+        if request.user.is_admin:
+            return HttpResponseRedirect('/admin/')
 
         breadcrumb_pages = [
             {'title': 'Home', 'url': reverse('index_page'), 'is_active': False},
@@ -74,7 +83,10 @@ class SearchView(View):
         ]
         self.context['breadcrumb_pages'] = breadcrumb_pages
 
-        subject_instances = SubjectInstance.objects.all()
+        school_year = SchoolYear.objects.get(is_active=True).get_short_name()
+        self.context['school_year'] = school_year
+
+        subject_instances = SubjectInstance.objects.filter(semester__school_year__is_active=True)
         self.context['subject_instances'] = subject_instances
 
         return render(request, self.template_name, self.context)

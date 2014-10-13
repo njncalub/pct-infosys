@@ -6,7 +6,7 @@ class SubjectAdmin(admin.ModelAdmin):
     model         = Subject
     list_display  = ('code', 'name', 'units', )
     list_filter   = ('units', )
-    search_fields = ('code', 'name', 'descriptions', 'room', )
+    search_fields = ('code', 'name', 'description', 'units', )
 
 
 class SubjectInstanceAdmin(admin.ModelAdmin):

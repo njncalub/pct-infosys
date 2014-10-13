@@ -8,6 +8,7 @@ from room_manager.models import Room
 from school_year_manager.models import SchoolYear, Semester
 from student_profiling.models import Student
 from teacher_profiling.models import Teacher
+from section_manager.models import SectionInstance
 
 
 TIME_SLOT_CHOICES = (
@@ -65,6 +66,8 @@ class SubjectInstance(models.Model):
 
     subject       = models.ForeignKey(Subject)
     semester      = models.ForeignKey(Semester)
+    section       = models.ForeignKey(SectionInstance)
+
     instance_code = models.CharField(_('instance code'), max_length=25, **optional)
 
     time          = models.CharField(_('time'), max_length=6, choices=TIME_SLOT_CHOICES, default='0800AM')

@@ -13,7 +13,7 @@ class SectionInstanceAdmin(admin.ModelAdmin):
     model             = SectionInstance
     list_display      = ('section', 'get_school_year', 'get_student_count', )
     list_filter       = ('school_year__start_year', )
-    search_fields     = ('name', )
+    search_fields     = ('section__name', )
     filter_horizontal = ('students', )
 
 

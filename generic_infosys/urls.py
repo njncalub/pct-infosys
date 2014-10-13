@@ -24,7 +24,8 @@ urlpatterns = patterns('',
     url(r'^records/(?P<year>\d{4})/$', RecordsView.as_view(), name="records_year_view"),
     url(r'^records/(?P<year>\d{4})/(?P<semester>\d{2})/$', RecordsView.as_view(), name="records_semester_view"),
     url(r'^search/$', SearchView.as_view(), name="search_view"),
+
     url(r'^index/$', IndexView.as_view(), name="index_view"),
 
-    url(r'$', RedirectView.as_view(url='/index/', permanent=True), name='index_page'),
+    url(r'^.*$', RedirectView.as_view(url='/index/', permanent=True), name='index_page'),
 )
