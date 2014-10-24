@@ -80,6 +80,14 @@ class Semester(models.Model):
         return "{semester} of {school_year}".format(semester=SEMESTER_DICT.get(self.semester),
                                                     school_year=self.school_year)
 
+    def get_semester_number(self):
+        if self.semester == "1STSEM":
+            return 1
+        if self.semester == "2NDSEM":
+            return 2
+        if self.semester == "SUMMER":
+            return 3
+
     def get_student_count(self):
         return self.students.count()
     get_student_count.short_description = 'students enrolled'

@@ -22,7 +22,7 @@ urlpatterns = patterns('',
 
     url(r'^records/$', RecordsView.as_view(), name="records_view"),
     url(r'^records/(?P<year>\d{4})/$', RecordsView.as_view(), name="records_year_view"),
-    url(r'^records/(?P<year>\d{4})/(?P<semester>\d{2})/$', RecordsView.as_view(), name="records_semester_view"),
+    url(r'^records/(?P<year>\d{4})/(?P<semester>\d{1})/$', RecordsView.as_view(), name="records_semester_view"),
     url(r'^search/$', SearchView.as_view(), name="search_view"),
 
     url(r'^index/$', IndexView.as_view(), name="index_view"),
