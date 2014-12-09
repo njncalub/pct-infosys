@@ -8,6 +8,7 @@ from django.views.generic import View
 
 from student_profiling.models import Student
 from subject_manager.models import Subject, SubjectInstance
+from section_manager.models import Section, SectionInstance
 from school_year_manager.models import SchoolYear, Semester
 
 
@@ -54,6 +55,9 @@ class RecordsView(View):
         instances = Semester.objects.filter(students__username=request.user.username).order_by("-school_year__start_year",
                                                                                                "-semester")
 
+        if not instances:
+            return render(request, "student_profiling/records_none.html", self.context)
+
         if not year or not semester_number:
             s = instances[0]
 
@@ -85,6 +89,10 @@ class RecordsView(View):
         total_units = 0
         for s in subject_instances:
             total_units += s.subject.units
+
+        year_level = SectionInstance.objects.get(students__username=request.user.username,
+                                                 school_year__start_year=year).section.year_level
+        self.context['year_level'] = year_level
 
         self.context['subject_instances'] = subject_instances
         self.context['total_units'] = total_units
@@ -121,8 +129,8 @@ class SearchView(View):
         ]
         self.context['breadcrumb_pages'] = breadcrumb_pages
 
-        school_year = SchoolYear.objects.get(is_active=True).get_short_name()
-        self.context['school_year'] = school_year
+        school_year = SchoolYear.objects.filter(is_active=True)
+        self.context['school_year'] = school_year[0].get_short_name() if school_year else "None"
 
         subject_instances = SubjectInstance.objects.filter(semester__school_year__is_active=True)
         self.context['subject_instances'] = subject_instances

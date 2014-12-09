@@ -1,0 +1,47 @@
+{% extends "base_site.html" %}
+
+{% block content %}
+<div class="row student-info-area">
+    <div class="col-md-6 student-info">
+        <div class="row row-info">
+            <div class="col-md-3 info-label">Name</div>
+            <div class="col-md-9 info-text">{{ user.get_full_name }}</div>
+        </div>
+        <div class="row row-info">
+            <div class="col-md-3 info-label">Degree Program</div>
+            <div class="col-md-9 info-text">{{ user.degree_program }}</div>
+        </div>
+    </div>
+</div>
+
+<table class="table table-bordered table-striped table-hover">
+<thead>
+        <th>SUBJECT CODE</th>
+        <th>SUBJECT DESCRIPTION</th>
+        <th>UNITS</th>
+        <th>TIME</th>
+        <th>DAYS</th>
+        <th>DATE START</th>
+        <th>DATE END</th>
+        <th>ROOM</th>
+        <th>TEACHER</th>
+    </thead>
+    <tbody>
+        <tr>
+            <td class="text-center">-</td>
+            <td class="text-center">-</td>
+            <td class="text-center">-</td>
+            <td class="text-center">-</td>
+            <td class="text-center">-</td>
+            <td class="text-center">-</td>
+            <td class="text-center">-</td>
+            <td class="text-center">-</td>
+            <td class="text-center">-</td>
+        </tr>
+    </tbody>
+</table>
+<div class="btn-group">
+    <a type="button" href="{{ prev_link }}" class="btn btn-default disabled">Previous</a>
+    <a type="button" href="{{ next_link }}" class="btn btn-default disabled">Next</a>
+</div>
+{% endblock content %}
